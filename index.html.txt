@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Darkweb Chat</title>
+<style>
+  body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: monospace, monospace;
+    margin: 0; padding: 0;
+    display: flex; flex-direction: column; height: 100vh;
+  }
+  #chat {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border-top: 1px solid #333;
+  }
+  #inputArea {
+    display: flex;
+    border-top: 1px solid #333;
+  }
+  #msgInput {
+    flex-grow: 1;
+    background: #222;
+    border: none;
+    color: #e0e0e0;
+    padding: 10px;
+    font-size: 1em;
+  }
+  #sendBtn {
+    background: #555;
+    border: none;
+    color: #e0e0e0;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  #sendBtn:hover {
+    background: #777;
+  }
+  .message {
+    margin-bottom: 8px;
+  }
+  .mine {
+    color: #6af;
+  }
+  .other {
+    color: #fa6;
+  }
+</style>
+</head>
+<body>
+
+<div id="chat"></div>
+<div id="inputArea">
+  <input type="text" id="msgInput" placeholder="Wpisz wiadomość..." autocomplete="off" />
+  <button id="sendBtn">Wyślij</button>
+</div>
+
+<script>
+  // Prosty AES 128 bit w JS bez zewnętrznych bibliotek (TinyAES-like) – dla demo używamy prostego XOR zamiast prawdziwego AES, bo prawdziwe jest za długie do inline
+
+  // Klucz szyfrowania (ustaw na własny, powinien być długi i poufny)
+  const key = "tajny_klucz_1234";
+
+  function xorEncryptDecrypt(text, key) {
+    let res = "";
+    for(let i=0; i<text.length; i++){
+      res += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    }
+    return res;
+  }
+
+  const chatEl = document.getElementById('chat');
+  const inputEl = document.getElementById('msgInput');
+  const sendBtn = document.getElementById('sendBtn');
+
+  // Symulacja "wysyłania" i odbierania - tutaj tylko localStorage na demo
+  // W realu trzeba wymienić to na websockety, backend i Tor
+
+  function addMessage(text, mine=true) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'message ' + (mine ? 'mine' : 'other');
+    msgDiv.textContent = text;
+    chatEl.appendChild(msgDiv);
+    chatEl.scrollTop = chatEl.scrollHeight;
+  }
+
+  function sendMessage() {
+    let msg = inputEl.value.trim();
+    if(!msg) return;
+
+    // Szyfrujemy wiadomość
+    const encrypted = btoa(xorEncryptDecrypt(msg, key));
+    // Zapis do localStorage (symulacja wymiany)
+    localStorage.setItem('lastMessage', encrypted);
+    addMessage(msg, true);
+    inputEl.value = '';
+
+    // Symulujemy odbiór (dla demo)
+    setTimeout(() => {
+      const receivedEncrypted = localStorage.getItem('lastMessage');
+      if(receivedEncrypted) {
+        const decrypted = xorEncryptDecrypt(atob(receivedEncrypted), key);
+        if(decrypted !== msg) addMessage(decrypted, false);
+      }
+    }, 500);
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  inputEl.addEventListener('keydown', e => {
+    if(e.key === 'Enter') sendMessage();
+  });
+
+</script>
+</body>
+</html>
