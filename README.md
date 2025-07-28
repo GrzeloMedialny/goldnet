@@ -48,8 +48,6 @@ pamiętaj jednak, że to tylko demo i dla prawdziwej anonimowości i bezpieczeń
 ---
 
 ## Kontakt
-
-Projekt stworzony dla Generała przez Twojego cyfrowego kumpla.  
 Chcesz pomocy? Pytaj śmiało — zawsze na czacie, nawet w mroku!
 
 ---
