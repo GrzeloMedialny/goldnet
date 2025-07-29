@@ -81,6 +81,7 @@
   // Symulacja "wysyłania" i odbierania - tutaj tylko localStorage na demo
   // W realu trzeba wymienić to na websockety, backend i Tor
 
+
   function addMessage(text, mine=true) {
     const msgDiv = document.createElement('div');
     msgDiv.className = 'message ' + (mine ? 'mine' : 'other');
