@@ -56,11 +56,3 @@ Chcesz pomocy? Pytaj śmiało — zawsze na czacie, nawet w mroku!
 *Bezpieczne rozmowy, bez świateł i fleszy.*
 
 
-
-
-
-
-
-
-
-
