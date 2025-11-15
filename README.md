@@ -4,6 +4,7 @@
 
 
 
+
 ## Opis
 
 To minimalistyczna, lekka i czarna jak noc na Torze strona do lokalnej komunikacji.  
