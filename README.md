@@ -1,6 +1,5 @@
 # Darkweb Chat – Prosty Szyfrowany Czat w HTML
 
-
 ## Opis
 
 To minimalistyczna, lekka i czarna jak noc na Torze strona do lokalnej komunikacji.  
